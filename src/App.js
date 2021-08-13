@@ -37,7 +37,7 @@ export const App = () => {
     setCounter(counter + 1);
   }, [counter]);
 
-  console.log("Render App");
+  console.log("Render App", name, counter);
 
   return (
     <AppContext.Provider value={{ counter }}>
