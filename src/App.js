@@ -6,10 +6,15 @@ import {
   createContext,
   useCallback
 } from "react";
+import axios from "axios";
+
 import { Counter } from "./Counter";
+
 import "./styles.css";
 
 export const AppContext = createContext();
+
+const URL_API = "https://jsonplaceholder.typicode.com/todos/1";
 
 export const App = () => {
   const [name, setName] = useState("");
@@ -18,15 +23,21 @@ export const App = () => {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos/1")
-      .then((response) => response.json())
-      .then((json) => setGetData(json));
+    const getDataFromServer = async () => {
+      const { data } = await axios.get(URL_API);
+      if (data) {
+        setGetData(data);
+      } else {
+        setGetData({ cod: "404", message: `server isn't responding` });
+      }
+    };
+    getDataFromServer();
   }, []);
 
   const numbers = useMemo(() => [" useMemo ", 1, 2, 3, 4, 5, 6, 7], []);
 
-  const handleChangeName = ({ target }) => {
-    setName(target.value);
+  const handleChangeName = ({ target: { value } }) => {
+    setName(value);
   };
 
   const inputRef = useRef();
@@ -40,7 +51,8 @@ export const App = () => {
     [counter]
   );
 
-  console.log("Render App", name, counter);
+  console.log(name);
+  console.log(counter);
 
   return (
     <AppContext.Provider value={{ counter }}>
@@ -55,8 +67,9 @@ export const App = () => {
           onChange={handleChangeName}
         />
         {numbers}
-        {/* <div>{Object.values(getData)}</div> */}
+
         <pre>const todo = {JSON.stringify(getData, null, 2)}</pre>
+
         <Counter onHandleIncrement={handleIncrement} />
       </div>
     </AppContext.Provider>
