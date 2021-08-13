@@ -23,7 +23,7 @@ export const App = () => {
       .then((json) => setGetData(json));
   }, []);
 
-  const numbers = useMemo(() => [1, 2, 3, 4, 5, 6, 7], []);
+  const numbers = useMemo(() => [" useMemo ", 1, 2, 3, 4, 5, 6, 7], []);
 
   const handleChangeName = ({ target }) => {
     setName(target.value);
@@ -33,9 +33,12 @@ export const App = () => {
 
   const handleFocusInput = () => inputRef.current.focus();
 
-  const handleIncrement = useCallback(() => {
-    setCounter(counter + 1);
-  }, [counter]);
+  const handleIncrement = useCallback(
+    (value) => {
+      setCounter(counter + value);
+    },
+    [counter]
+  );
 
   console.log("Render App", name, counter);
 
@@ -53,7 +56,7 @@ export const App = () => {
         />
         {numbers}
         {/* <div>{Object.values(getData)}</div> */}
-        <pre>{JSON.stringify(getData, null, 2)}</pre>
+        <pre>const todo = {JSON.stringify(getData, null, 2)}</pre>
         <Counter onHandleIncrement={handleIncrement} />
       </div>
     </AppContext.Provider>

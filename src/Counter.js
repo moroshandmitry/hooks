@@ -6,10 +6,14 @@ export const Counter = ({ onHandleIncrement }) => {
 
   return (
     <>
-      <button type="button" onClick={onHandleIncrement}>
-        Add one
+      <button type="button" onClick={() => onHandleIncrement(5)}>
+        {counter ? "" : "Start"} Add Five
       </button>
-      <div>Add number {counter} from context</div>
+      <div>
+        {counter
+          ? `Add five ${counter} from context`
+          : "Please press on button and counter will be here..."}
+      </div>
     </>
   );
 };
