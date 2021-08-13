@@ -7,14 +7,14 @@ import {
   useCallback
 } from "react";
 import axios from "axios";
+import dotenv from "dotenv";
 
 import { Counter } from "./Counter";
-
 import "./styles.css";
 
-export const AppContext = createContext();
+dotenv.config();
 
-const URL_API = "https://jsonplaceholder.typicode.com/todos/1";
+export const AppContext = createContext();
 
 export const App = () => {
   const [name, setName] = useState("");
@@ -24,7 +24,7 @@ export const App = () => {
 
   useEffect(() => {
     const getDataFromServer = async () => {
-      const { data } = await axios.get(URL_API);
+      const { data } = await axios.get(process.env.URL_API);
       if (data) {
         setGetData(data);
       } else {
