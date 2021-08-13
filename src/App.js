@@ -22,15 +22,16 @@ export const App = () => {
 
   const [counter, setCounter] = useState(0);
 
+  const getDataFromServer = async () => {
+    const { data } = await axios.get(process.env.URL_API);
+    if (data) {
+      setGetData(data);
+    } else {
+      setGetData({ cod: "404", message: `server isn't responding` });
+    }
+  };
+
   useEffect(() => {
-    const getDataFromServer = async () => {
-      const { data } = await axios.get(process.env.URL_API);
-      if (data) {
-        setGetData(data);
-      } else {
-        setGetData({ cod: "404", message: `server isn't responding` });
-      }
-    };
     getDataFromServer();
   }, []);
 
